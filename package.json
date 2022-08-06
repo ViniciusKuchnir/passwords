@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "dev" : "nodemon Controller.js"
   },
   "dependencies": {
     "@react-native-community/slider": "4.2.1",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "nodemon": "^2.0.19",
     "sequelize-cli": "^6.4.1"
   },
   "private": true
