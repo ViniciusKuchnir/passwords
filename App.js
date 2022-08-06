@@ -1,4 +1,4 @@
-import Routes from './src/pages/routes';
+import Routes from './src/views/routes';
 
 export default function App() {
   return (
