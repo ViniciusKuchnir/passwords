@@ -4,8 +4,6 @@ import {
   View, 
   Text, 
   TouchableOpacity, 
-  KeyboardAvoidingView,
-  Platform,
   Keyboard, 
   StyleSheet 
 } from "react-native";
@@ -16,6 +14,7 @@ import * as Clipboard from "expo-clipboard";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Notification from "../../components/Notification";
+import {css} from "../../assets/styles/global";
 
 export default function Main() {
   const [characters, setCharacters] = useState(2);
@@ -50,9 +49,8 @@ export default function Main() {
   }, [message])
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    <View 
+      style={css.container}
     >
       <StatusBar style="auto" />
       <View style={styles.content}>
@@ -101,18 +99,11 @@ export default function Main() {
           <View style={styles.result} />
         )}
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#FFF",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
   content: {
     width: "100%",
     height: "100%",
