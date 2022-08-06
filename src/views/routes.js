@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Main from "./Main";
 import List from "./List";
+import Configurations from "./Configurations";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +43,16 @@ export default function Routes() {
             headerShown: false,
             tabBarIcon: ({color}) =>{
                 return <Feather name="list" size={24} color={color} />
+            }
+          }}
+        />
+        <Tab.Screen
+          name="Configurações"
+          component={Configurations}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color}) =>{
+                return <Feather name="settings" size={24} color={color} />
             }
           }}
         />
