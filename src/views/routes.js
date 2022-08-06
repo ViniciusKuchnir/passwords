@@ -18,15 +18,10 @@ export default function Routes() {
             tabBarActiveTintColor: "#232323",
             tabBarInactiveTintColor: "#FFF",
             tabBarStyle:{
-                position: "absolute",
                 backgroundColor: "#FFAC33",
-                borderRadius: 10,
                 borderTopWidth: 0,
                 elevation: 0,
-                height: 56,
-                left: 20,
-                right: 20,
-                bottom: 20,
+                height: 64,
             }
         }}
       >
