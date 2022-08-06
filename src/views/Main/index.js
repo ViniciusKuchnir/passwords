@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard, 
+  StyleSheet 
+} from "react-native";
 import Slider from "@react-native-community/slider";
 import { generatePassword } from "../../utils/generatePassword";
 import { Feather } from "@expo/vector-icons";
@@ -42,7 +50,10 @@ export default function Main() {
   }, [message])
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <StatusBar style="auto" />
       <View style={styles.content}>
         {message !== null ? <Notification label={message} /> : <View /> } 
@@ -66,7 +77,10 @@ export default function Main() {
 
         <Button
           text="Gerar senha"
-          onPress={() => generatePassword(characters, password, setPassword)}
+          onPress={() => {
+            generatePassword(characters, password, setPassword)
+            Keyboard.dismiss();
+          }}
         />
         {password !== "" ? (
           <View style={styles.result}>
@@ -87,7 +101,7 @@ export default function Main() {
           <View style={styles.result} />
         )}
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
