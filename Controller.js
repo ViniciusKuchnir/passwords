@@ -6,16 +6,19 @@ const models = require('./models');
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 let password = models.Password;
 
-app.get('/create', async (req, res) => {
-    let create = await password.create({
-        utility: "Facebook",
-        password: "GswtwGGFs428!",
-        createdAt: new Date(),
-        updatedAt: new Date(),
+app.post('/create', async (req, res) => {
+    if (req.body.utility === "") {
+        res.send(JSON.stringify("Preencha o campo de utilidade da senha"));
+        return
+    }
+    const create = await password.create({
+        utility: req.body.utility,
+        password: req.body.password
     });
-    res.send("Senha criada com sucesso")
+    res.send(JSON.stringify("Senha salvada com sucesso!"))
 });
 
 

@@ -7,25 +7,50 @@ import { Feather } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import Notification from "../../components/Notification";
 
 export default function Main() {
   const [characters, setCharacters] = useState(2);
-  const [utility, setUtility] = useState(null);
+  const [utility, setUtility] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [message, setMessage] = useState(null);
+
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(password);
   };
 
-  function sendForm(){
-    console.log(password);
+  async function sendForm() {
+    let response = await fetch("http://192.168.15.4:3000/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        utility: utility,
+        password: password,
+      }),
+    });
+    let json = await response.json();
+    setMessage(json);
   }
+
+  useEffect(()=> {
+    setTimeout(() => {
+      setMessage(null);
+    }, 7000);
+  }, [message])
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.content}>
-        <Input label="Qual será a utilidade da senha?" value={utility} setValue={setUtility} />
+        {message !== null ? <Notification label={message} /> : <View /> } 
+        <Input
+          label="Qual será a utilidade da senha?"
+          value={utility}
+          setValue={setUtility}
+        />
         <Text style={styles.characters}>Caracteres: {characters}</Text>
         <Slider
           style={styles.slider}
@@ -39,7 +64,10 @@ export default function Main() {
           value={characters}
         />
 
-        <Button text="Gerar senha" onPress={() => generatePassword(characters, password, setPassword)}/>
+        <Button
+          text="Gerar senha"
+          onPress={() => generatePassword(characters, password, setPassword)}
+        />
         {password !== "" ? (
           <View style={styles.result}>
             <View style={styles.password}>
@@ -52,7 +80,7 @@ export default function Main() {
               </TouchableOpacity>
             </View>
             <View style={styles.button}>
-              <Button text="Salvar senha" onPress={() => sendForm()}/>
+              <Button text="Salvar senha" onPress={() => sendForm()} />
             </View>
           </View>
         ) : (
@@ -73,6 +101,7 @@ const styles = StyleSheet.create({
   },
   content: {
     width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -96,7 +125,7 @@ const styles = StyleSheet.create({
     height: 48,
     width: "100%",
   },
-  password:{
+  password: {
     width: "100%",
     height: "100%",
     marginTop: 60,
