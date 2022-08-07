@@ -22,11 +22,11 @@ app.post('/create', async (req, res) => {
 });
 
 
-app.get('/read', async (req, res) => {
+app.get('/list', async (req, res) => {
     let read = await password.findAll({
         raw: true
     });
-    console.log(read);
+    res.send(read);
 })
 
 
