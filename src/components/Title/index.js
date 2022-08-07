@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Title() {
+export default function Title({text}) {
  return (
-    <Text style={styles.title}>Suas senhas</Text>
+    <Text style={styles.title}>{text}</Text>
   );
 }
 
