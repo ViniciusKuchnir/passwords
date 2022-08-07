@@ -27,7 +27,7 @@ export default function Main() {
   };
 
   async function sendForm() {
-    let response = await fetch("http://192.168.15.4:3000/create", {
+    let response = await fetch("http://192.168.15.10:3000/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
