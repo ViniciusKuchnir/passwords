@@ -8,21 +8,16 @@ import {
   StyleSheet,
 } from "react-native";
 import { css } from "../../assets/styles/global";
-import { Feather } from "@expo/vector-icons";
-import * as Clipboard from "expo-clipboard";
 import Title from "../../components/Title";
+import ListPasswords from "../../components/ListPasswords";
 
 const StatusBarHeight = StatusBar.currentHeight;
 
 export default function List() {
   const [values, setValues] = useState([]);
 
-  const copyToClipboard = async (password) => {
-    await Clipboard.setStringAsync(password);
-  };
-
   useEffect(() => {
-    let response = fetch("http://192.168.15.4:3000/list")
+    let response = fetch("http://192.168.15.10:3000/list")
       .then((response) => response.json())
       .then((passwords) => setValues(passwords));
   }, [values]);
@@ -37,24 +32,15 @@ export default function List() {
         showHideTransition={"fade"}
       />
       <Title text="Suas senhas" />
-      <ScrollView>
-        {values.map((item, index) => {
-          return (
-            <View style={styles.item} key={index}>
-              <View style={styles.viewUtility}>
-                <Text style={styles.utility}>{item.utility}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.clipboard}
-                onPress={() => copyToClipboard(item.password)}
-              >
-                <Feather name="clipboard" size={32} color="#232323" />
-                <Text>Copiar</Text>
-              </TouchableOpacity>
-            </View>
-          );
-        })}
-      </ScrollView>
+      {
+        values.length === 0 ? (
+          <View style={styles.empty}>
+            <Text style={styles.empty__text}>Não existe nenhuma senha salva!</Text>
+          </View>
+        ) : (
+        <ListPasswords list={values} />
+        )
+      }
     </View>
   );
 }
@@ -63,27 +49,14 @@ const styles = StyleSheet.create({
   container: {
     marginTop: StatusBarHeight,
   },
-  item: {
-    height: 64,
+  empty:{
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingStart: 8,
-    paddingEnd: 8,
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#DADADA",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  viewUtility: {
-    width: "80%",
-  },
-  utility: {
-    fontSize: 24,
+  empty__text: {
+    color: "#C1C1C1",
+    fontSize: 16,
     fontWeight: "bold",
-    letterSpacing: 0.5,
-  },
-  clipboard: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  }
 });
