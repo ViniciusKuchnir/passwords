@@ -50,7 +50,7 @@ export default function Main() {
 
   return (
     <View 
-      style={css.container}
+      style={[css.container, styles.container]}
     >
       <StatusBar style="auto" />
       <View style={styles.content}>
@@ -104,6 +104,10 @@ export default function Main() {
 }
 
 const styles = StyleSheet.create({
+  container:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   content: {
     width: "100%",
     height: "100%",
